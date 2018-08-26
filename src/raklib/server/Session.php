@@ -507,6 +507,9 @@ class Session{
 		}elseif($packet::$ID > 0x00 and $packet::$ID < 0x80){ //Not Data packet :)
 			$packet->decode();
 			if($packet instanceof OPEN_CONNECTION_REQUEST_1){
+				if($packet->mtuSize === 1164){
+					return;
+				}
 				$packet->protocol; //TODO: check protocol number and refuse connections
 				$pk = new OPEN_CONNECTION_REPLY_1();
 				$pk->mtuSize = $packet->mtuSize;
